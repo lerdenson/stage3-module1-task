@@ -8,7 +8,7 @@ import java.util.List;
 public interface Service<I, O> {
     List<O> readAll();
 
-    O readById(long id) throws NotFoundException;
+    O readById(Long id) throws NotFoundException;
 
     O create(I in) throws ValidationException, NotFoundException;
 

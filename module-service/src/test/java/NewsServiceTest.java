@@ -44,7 +44,7 @@ public class NewsServiceTest {
     @Test
     void findIdWithWrongIdThrowsNotFoundException() {
         Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        Exception exception = assertThrows(NotFoundException.class, () -> service.readById(207));
+        Exception exception = assertThrows(NotFoundException.class, () -> service.readById(207L));
 
         String expectedErrorCode = "ERROR CODE: 01";
         assertTrue(exception.getMessage().contains(expectedErrorCode));
