@@ -18,7 +18,7 @@ public class Main {
                     executor.executeCommand(command, scanner);
                 }
                 if (command != null && command.getCommandNumber() == 0) {
-                    System.exit(0);
+                    break;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please write only operation number");

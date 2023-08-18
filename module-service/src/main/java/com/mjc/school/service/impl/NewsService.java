@@ -28,7 +28,7 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
 
     @Override
     public List<NewsResponseDTO> findAll() {
-        return NewsMapper.INSTANCE.convert(repository.findAll());
+        return NewsMapper.INSTANCE.convert(repository.readAll());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
         try {
             return NewsMapper
                     .INSTANCE
-                    .convert(repository.findById(id));
+                    .convert(repository.readById(id));
         } catch (NewsNotFoundException e) {
             throw new NotFoundException(String.format(ErrorCodeMessage.NEWS_NOT_FOUND.toString(), id));
         }
@@ -49,7 +49,7 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
         try {
             validator.validateNews(in);
             return NewsMapper.INSTANCE.convert(
-                    repository.add(NewsMapper.INSTANCE.convertRequest(in))
+                    repository.create(NewsMapper.INSTANCE.convertRequest(in))
             );
         } catch (AuthorNotFoundException e) {
             throw new NotFoundException(String.format(ErrorCodeMessage.AUTHOR_NOT_FOUND.toString(), in.getAuthorId()));

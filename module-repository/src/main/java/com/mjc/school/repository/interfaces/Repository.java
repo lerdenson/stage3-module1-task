@@ -6,9 +6,9 @@ import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import java.util.List;
 
 public interface Repository<T> {
-    List<T> findAll();
-    T add(T t) throws AuthorNotFoundException;
+    List<T> readAll();
+    T create(T t) throws AuthorNotFoundException;
     T update(T t) throws AuthorNotFoundException, NewsNotFoundException;
-    boolean deleteById(long id);
-    T findById(long id) throws NewsNotFoundException;
+    Boolean deleteById(long id);
+    T readById(long id) throws NewsNotFoundException;
 }

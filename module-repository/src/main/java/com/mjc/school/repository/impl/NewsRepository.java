@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class NewsRepository implements Repository<News> {
-    DataSource dataSource;
+    private final DataSource dataSource;
     public NewsRepository() {
         dataSource = DataSource.getInstance();
     }
@@ -23,12 +23,12 @@ public class NewsRepository implements Repository<News> {
 
 
     @Override
-    public List<News> findAll() {
+    public List<News> readAll() {
         return dataSource.getNews();
     }
 
     @Override
-    public News findById(long id) throws NewsNotFoundException {
+    public News readById(long id) throws NewsNotFoundException {
         Optional<News> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
         if (newsOptional.isPresent()) {
             return newsOptional.get();
@@ -36,7 +36,7 @@ public class NewsRepository implements Repository<News> {
     }
 
     @Override
-    public News add(News news) throws AuthorNotFoundException {
+    public News create(News news) throws AuthorNotFoundException {
         News createdNews;
         if (isAuthorExists(news.getAuthorId())) {
             createdNews = new News(news.getTitle(), news.getContent(), news.getAuthorId());
@@ -69,7 +69,7 @@ public class NewsRepository implements Repository<News> {
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public Boolean deleteById(long id) {
         Optional<News> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
         if (newsOptional.isPresent()) {
             News newsToDelete = newsOptional.get();
