@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @ToString
-public class News {
+public class NewsModel {
     private long id;
     private String title;
     private String content;
@@ -22,7 +22,7 @@ public class News {
         return currentNextId++;
     }
 
-    public News(String title, String content, long authorId) {
+    public NewsModel(String title, String content, long authorId) {
         this.title = title;
         this.content = content;
         this.authorId = authorId;

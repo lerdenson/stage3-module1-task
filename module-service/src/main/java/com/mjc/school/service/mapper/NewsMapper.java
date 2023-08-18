@@ -1,6 +1,6 @@
 package com.mjc.school.service.mapper;
 
-import com.mjc.school.repository.models.News;
+import com.mjc.school.repository.models.NewsModel;
 import com.mjc.school.service.dto.NewsRequestDTO;
 import com.mjc.school.service.dto.NewsResponseDTO;
 import org.mapstruct.Mapper;
@@ -12,12 +12,12 @@ import java.util.List;
 public interface NewsMapper {
     NewsMapper INSTANCE = Mappers.getMapper(NewsMapper.class);
 
-    NewsResponseDTO convert(News news);
+    NewsResponseDTO convert(NewsModel news);
 
-    List<NewsResponseDTO> convert(List<News> newsList);
+    List<NewsResponseDTO> convert(List<NewsModel> newsList);
 
-    default News convertRequest(NewsRequestDTO newsRequest) {
-        return News.builder()
+    default NewsModel convertRequest(NewsRequestDTO newsRequest) {
+        return NewsModel.builder()
                 .id(newsRequest.getId())
                 .title(newsRequest.getTitle())
                 .content(newsRequest.getContent())

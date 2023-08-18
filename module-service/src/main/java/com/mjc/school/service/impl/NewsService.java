@@ -1,7 +1,7 @@
 package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.models.News;
+import com.mjc.school.repository.models.NewsModel;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.repository.interfaces.Repository;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
 
-    Repository<News> repository;
+    Repository<NewsModel> repository;
     NewsValidator validator;
 
     public NewsService() {

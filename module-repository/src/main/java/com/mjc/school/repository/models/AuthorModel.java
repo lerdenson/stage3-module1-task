@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Author {
+public class AuthorModel {
     private long id;
     private String name;
 
@@ -16,7 +16,7 @@ public class Author {
         return currentNextId++;
     }
 
-    public Author(String name) {
+    public AuthorModel(String name) {
         this.id = generateId();
         this.name = name;
     }

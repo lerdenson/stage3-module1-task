@@ -1,7 +1,7 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.models.Author;
-import com.mjc.school.repository.models.News;
+import com.mjc.school.repository.models.AuthorModel;
+import com.mjc.school.repository.models.NewsModel;
 import com.mjc.school.repository.utils.DataSource;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
@@ -11,35 +11,35 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public class NewsRepository implements Repository<News> {
+public class NewsRepository implements Repository<NewsModel> {
     private final DataSource dataSource;
     public NewsRepository() {
         dataSource = DataSource.getInstance();
     }
 
     private boolean isAuthorExists(long authorId) {
-        return dataSource.getAuthors().stream().map(Author::getId).anyMatch(a -> a==authorId);
+        return dataSource.getAuthors().stream().map(AuthorModel::getId).anyMatch(a -> a==authorId);
     }
 
 
     @Override
-    public List<News> readAll() {
+    public List<NewsModel> readAll() {
         return dataSource.getNews();
     }
 
     @Override
-    public News readById(long id) throws NewsNotFoundException {
-        Optional<News> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
+    public NewsModel readById(Long id) throws NewsNotFoundException {
+        Optional<NewsModel> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
         if (newsOptional.isPresent()) {
             return newsOptional.get();
         } else throw new NewsNotFoundException();
     }
 
     @Override
-    public News create(News news) throws AuthorNotFoundException {
-        News createdNews;
+    public NewsModel create(NewsModel news) throws AuthorNotFoundException {
+        NewsModel createdNews;
         if (isAuthorExists(news.getAuthorId())) {
-            createdNews = new News(news.getTitle(), news.getContent(), news.getAuthorId());
+            createdNews = new NewsModel(news.getTitle(), news.getContent(), news.getAuthorId());
             this.dataSource.getNews().add(createdNews);
             return createdNews;
         } else {
@@ -48,15 +48,15 @@ public class NewsRepository implements Repository<News> {
     }
 
     @Override
-    public News update(News news) throws AuthorNotFoundException, NewsNotFoundException {
+    public NewsModel update(NewsModel news) throws AuthorNotFoundException, NewsNotFoundException {
 
         if (isAuthorExists(news.getAuthorId())) {
-            Optional<News> optionalNews = this.dataSource.getNews().stream()
+            Optional<NewsModel> optionalNews = this.dataSource.getNews().stream()
                     .filter(a -> a.getId() == news.getId())
                     .findFirst();
 
             if (optionalNews.isPresent()) {
-                News updatedNews = optionalNews.get();
+                NewsModel updatedNews = optionalNews.get();
                 updatedNews.setAuthorId(news.getAuthorId());
                 updatedNews.setTitle(news.getTitle());
                 updatedNews.setContent(news.getContent());
@@ -69,10 +69,10 @@ public class NewsRepository implements Repository<News> {
     }
 
     @Override
-    public Boolean deleteById(long id) {
-        Optional<News> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
+    public Boolean deleteById(Long id) {
+        Optional<NewsModel> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
         if (newsOptional.isPresent()) {
-            News newsToDelete = newsOptional.get();
+            NewsModel newsToDelete = newsOptional.get();
             return this.dataSource.getNews().remove(newsToDelete);
         } else return false;
     }
