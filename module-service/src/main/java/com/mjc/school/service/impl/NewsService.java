@@ -18,21 +18,20 @@ import java.util.List;
 
 public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
 
-    Repository<NewsModel> repository;
-    NewsValidator validator;
+    private final Repository<NewsModel> repository;
+    private final NewsValidator validator = new NewsValidator();
 
     public NewsService() {
         repository = new NewsRepository();
-        validator = new NewsValidator();
     }
 
     @Override
-    public List<NewsResponseDTO> findAll() {
+    public List<NewsResponseDTO> readAll() {
         return NewsMapper.INSTANCE.convert(repository.readAll());
     }
 
     @Override
-    public NewsResponseDTO findById(long id) throws NotFoundException {
+    public NewsResponseDTO readById(long id) throws NotFoundException {
         try {
             return NewsMapper
                     .INSTANCE
@@ -72,7 +71,7 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public Boolean deleteById(Long id) {
         return repository.deleteById(id);
     }
 }

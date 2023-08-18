@@ -17,11 +17,11 @@ public class NewsController implements Controller<NewsRequestDTO, NewsResponseDT
     }
 
     public List<NewsResponseDTO> findAll() {
-        return service.findAll();
+        return service.readAll();
     }
 
     public NewsResponseDTO findById(long id) throws NotFoundException {
-        return service.findById(id);
+        return service.readById(id);
     }
 
     public NewsResponseDTO create(NewsRequestDTO newsDTO) throws ValidationException, NotFoundException {
