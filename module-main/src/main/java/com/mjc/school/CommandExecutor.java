@@ -2,8 +2,8 @@ package com.mjc.school;
 
 import com.mjc.school.controller.interfaces.Controller;
 import com.mjc.school.controller.impl.NewsController;
-import com.mjc.school.service.dto.NewsRequestDto;
-import com.mjc.school.service.dto.NewsResponseDto;
+import com.mjc.school.service.dto.NewsDtoRequest;
+import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
 import com.mjc.school.service.exceptions.ValidationException;
 
@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class CommandExecutor {
     private final String WRONG_ID = "id must be number";
-    private final Controller<NewsRequestDto, NewsResponseDto> newsController;
+    private final Controller<NewsDtoRequest, NewsDtoResponse> newsController;
 
     public CommandExecutor() {
         newsController = new NewsController();
@@ -39,8 +39,8 @@ public class CommandExecutor {
     }
 
     private void findAll() {
-        List<NewsResponseDto> newsList = newsController.readAll();
-        for (NewsResponseDto news : newsList) {
+        List<NewsDtoResponse> newsList = newsController.readAll();
+        for (NewsDtoResponse news : newsList) {
             System.out.println(news);
         }
     }
@@ -48,7 +48,7 @@ public class CommandExecutor {
     private void findById(Scanner scanner) {
         try {
             long id = Long.parseLong(readString(scanner, "id"));
-            NewsResponseDto news = newsController.readById(id);
+            NewsDtoResponse news = newsController.readById(id);
             System.out.println(news);
         } catch (NumberFormatException e) {
             System.out.println(WRONG_ID);
@@ -62,8 +62,8 @@ public class CommandExecutor {
             String title = readString(scanner, "title");
             String content = readString(scanner, "content");
             long authorId = Long.parseLong(readString(scanner, "author id"));
-            NewsRequestDto newNews = new NewsRequestDto(title, content, authorId);
-            NewsResponseDto returnedNews = newsController.create(newNews);
+            NewsDtoRequest newNews = new NewsDtoRequest(title, content, authorId);
+            NewsDtoResponse returnedNews = newsController.create(newNews);
             System.out.println(returnedNews);
         } catch (NumberFormatException e) {
             System.out.println(WRONG_ID);
@@ -78,8 +78,8 @@ public class CommandExecutor {
             String title = readString(scanner, "title");
             String content = readString(scanner, "content");
             long authorId = Long.parseLong(readString(scanner, "author id"));
-            NewsRequestDto newsForUpdate = new NewsRequestDto(id, title, content, authorId);
-            NewsResponseDto returnedNews = newsController.update(newsForUpdate);
+            NewsDtoRequest newsForUpdate = new NewsDtoRequest(id, title, content, authorId);
+            NewsDtoResponse returnedNews = newsController.update(newsForUpdate);
             System.out.println(returnedNews);
 
         } catch (NumberFormatException e) {
