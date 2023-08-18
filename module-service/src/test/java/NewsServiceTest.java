@@ -175,7 +175,6 @@ public class NewsServiceTest {
     }
 
 
-
     @Test
     void deleteRemovesElementTest() {
         Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();

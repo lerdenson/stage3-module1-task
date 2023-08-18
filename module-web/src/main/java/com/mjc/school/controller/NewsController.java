@@ -10,7 +10,11 @@ import com.mjc.school.service.interfaces.Service;
 import java.util.List;
 
 public class NewsController implements Controller<NewsRequestDTO, NewsResponseDTO> {
-    private final Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+    private final Service<NewsRequestDTO, NewsResponseDTO> service;
+
+    public NewsController() {
+        service = new NewsService();
+    }
 
     public List<NewsResponseDTO> findAll() {
         return service.findAll();
