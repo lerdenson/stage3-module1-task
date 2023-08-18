@@ -1,7 +1,7 @@
 package com.mjc.school;
 
-import com.mjc.school.controller.Controller;
-import com.mjc.school.controller.NewsController;
+import com.mjc.school.controller.interfaces.Controller;
+import com.mjc.school.controller.impl.NewsController;
 import com.mjc.school.service.dto.NewsRequestDTO;
 import com.mjc.school.service.dto.NewsResponseDTO;
 import com.mjc.school.service.exceptions.NotFoundException;
@@ -39,7 +39,7 @@ public class CommandExecutor {
     }
 
     private void findAll() {
-        List<NewsResponseDTO> newsList = newsController.findAll();
+        List<NewsResponseDTO> newsList = newsController.readAll();
         for (NewsResponseDTO news : newsList) {
             System.out.println(news);
         }
@@ -48,7 +48,7 @@ public class CommandExecutor {
     private void findById(Scanner scanner) {
         try {
             long id = Long.parseLong(readString(scanner, "id"));
-            NewsResponseDTO news = newsController.findById(id);
+            NewsResponseDTO news = newsController.readById(id);
             System.out.println(news);
         } catch (NumberFormatException e) {
             System.out.println(WRONG_ID);
