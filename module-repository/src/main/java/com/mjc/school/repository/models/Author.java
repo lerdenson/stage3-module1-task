@@ -1,4 +1,4 @@
-package com.mjc.school.repository.dataTypes;
+package com.mjc.school.repository.models;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +14,6 @@ public class Author {
 
     private synchronized long generateId() {
         return currentNextId++;
-    }
-
-    public Author(long id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Author(String name) {

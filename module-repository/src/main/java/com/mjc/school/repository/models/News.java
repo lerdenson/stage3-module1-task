@@ -1,4 +1,4 @@
-package com.mjc.school.repository.dataTypes;
+package com.mjc.school.repository.models;
 
 import lombok.*;
 

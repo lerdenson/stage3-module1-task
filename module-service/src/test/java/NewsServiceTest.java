@@ -1,4 +1,4 @@
-import com.mjc.school.service.NewsService;
+import com.mjc.school.service.impl.NewsService;
 import com.mjc.school.service.dto.NewsRequestDTO;
 import com.mjc.school.service.dto.NewsResponseDTO;
 import com.mjc.school.service.exceptions.NotFoundException;

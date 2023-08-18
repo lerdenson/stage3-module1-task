@@ -1,7 +1,7 @@
-package com.mjc.school.repository.dataWorker;
+package com.mjc.school.repository.utils;
 
-import com.mjc.school.repository.dataTypes.Author;
-import com.mjc.school.repository.dataTypes.News;
+import com.mjc.school.repository.models.Author;
+import com.mjc.school.repository.models.News;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -24,6 +24,10 @@ public enum Commands {
         return optional.orElse(null);
     }
 
+    public int getCommandNumber() {
+        return commandNumber;
+    }
+
     @Override
     public String toString() {
         return String.format("%d - %s", commandNumber, description);

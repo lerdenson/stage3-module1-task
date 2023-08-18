@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CommandExecutor {
+    private final String WRONG_ID = "id must be number";
     private final Controller<NewsRequestDTO, NewsResponseDTO> newsController;
 
     public CommandExecutor() {
@@ -50,7 +51,7 @@ public class CommandExecutor {
             NewsResponseDTO news = newsController.findById(id);
             System.out.println(news);
         } catch (NumberFormatException e) {
-            System.out.println("id must be number!");
+            System.out.println(WRONG_ID);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -65,7 +66,7 @@ public class CommandExecutor {
             NewsResponseDTO returnedNews = newsController.create(newNews);
             System.out.println(returnedNews);
         } catch (NumberFormatException e) {
-            System.out.println("id must be number!");
+            System.out.println(WRONG_ID);
         } catch (NotFoundException | ValidationException e) {
             System.out.println(e.getMessage());
         }
@@ -82,7 +83,7 @@ public class CommandExecutor {
             System.out.println(returnedNews);
 
         } catch (NumberFormatException e) {
-            System.out.println("id must be number!");
+            System.out.println(WRONG_ID);
         } catch (NotFoundException | ValidationException e) {
             System.out.println(e.getMessage());
         }
@@ -94,7 +95,7 @@ public class CommandExecutor {
             boolean isDeleted = newsController.delete(id);
             System.out.println(isDeleted);
         } catch (NumberFormatException e) {
-            System.out.println("id must be number!");
+            System.out.println(WRONG_ID);
         }
     }
 

@@ -1,8 +1,8 @@
-package com.mjc.school.repository;
+package com.mjc.school.repository.impl;
 
-import com.mjc.school.repository.dataTypes.Author;
-import com.mjc.school.repository.dataTypes.News;
-import com.mjc.school.repository.dataWorker.DataSource;
+import com.mjc.school.repository.models.Author;
+import com.mjc.school.repository.models.News;
+import com.mjc.school.repository.utils.DataSource;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.interfaces.Repository;
