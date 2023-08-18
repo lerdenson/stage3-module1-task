@@ -1,6 +1,6 @@
 import com.mjc.school.service.impl.NewsService;
-import com.mjc.school.service.dto.NewsRequestDTO;
-import com.mjc.school.service.dto.NewsResponseDTO;
+import com.mjc.school.service.dto.NewsRequestDto;
+import com.mjc.school.service.dto.NewsResponseDto;
 import com.mjc.school.service.exceptions.NotFoundException;
 import com.mjc.school.service.exceptions.ValidationException;
 import com.mjc.school.service.interfaces.Service;
@@ -12,27 +12,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class NewsServiceTest {
 
-    long getRandomNewsId(Service<NewsRequestDTO, NewsResponseDTO> service) {
-        List<NewsResponseDTO> newsList = service.readAll();
+    long getRandomNewsId(Service<NewsRequestDto, NewsResponseDto> service) {
+        List<NewsResponseDto> newsList = service.readAll();
         return newsList.get((int) (Math.random() * newsList.size())).getId();
     }
 
     @Test
     void findAllReturnsNonEmptyListTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        List<NewsResponseDTO> responseList = service.readAll();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
+        List<NewsResponseDto> responseList = service.readAll();
 
         assertFalse(responseList.isEmpty());
     }
 
     @Test
     void findByIdReturnsCorrectNewsTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        List<NewsResponseDTO> responseList = service.readAll();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
+        List<NewsResponseDto> responseList = service.readAll();
 
-        NewsResponseDTO expectedNews = responseList.get((int) (Math.random() * responseList.size()));
+        NewsResponseDto expectedNews = responseList.get((int) (Math.random() * responseList.size()));
         try {
-            NewsResponseDTO responseNews = service.readById(expectedNews.getId());
+            NewsResponseDto responseNews = service.readById(expectedNews.getId());
 
             assertEquals(expectedNews.getTitle(), responseNews.getTitle());
         } catch (NotFoundException e) {
@@ -43,7 +43,7 @@ public class NewsServiceTest {
 
     @Test
     void findIdWithWrongIdThrowsNotFoundException() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         Exception exception = assertThrows(NotFoundException.class, () -> service.readById(207L));
 
         String expectedErrorCode = "ERROR CODE: 01";
@@ -52,10 +52,10 @@ public class NewsServiceTest {
 
     @Test
     void createReturnsCorrectNewsTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        NewsRequestDTO newsDto = new NewsRequestDTO("MY TITLE", "MY CONTENT", 7);
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
+        NewsRequestDto newsDto = new NewsRequestDto("MY TITLE", "MY CONTENT", 7);
         try {
-            NewsResponseDTO response = service.create(newsDto);
+            NewsResponseDto response = service.create(newsDto);
 
             assertEquals(newsDto.getTitle(), response.getTitle());
         } catch (ValidationException | NotFoundException e) {
@@ -66,14 +66,14 @@ public class NewsServiceTest {
 
     @Test
     void createAddNewElementTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        NewsRequestDTO newsDto = new NewsRequestDTO("MY TITLE!", "MY CONTENT!", 11);
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
+        NewsRequestDto newsDto = new NewsRequestDto("MY TITLE!", "MY CONTENT!", 11);
         try {
             service.create(newsDto);
-            List<NewsResponseDTO> responseList = service.readAll();
+            List<NewsResponseDto> responseList = service.readAll();
 
             assertTrue(responseList.stream()
-                    .map(NewsResponseDTO::getTitle)
+                    .map(NewsResponseDto::getTitle)
                     .anyMatch(a -> a.equals(newsDto.getTitle())));
         } catch (ValidationException | NotFoundException e) {
             e.printStackTrace();
@@ -83,8 +83,8 @@ public class NewsServiceTest {
 
     @Test
     void createWithWrongDataThrowsValidationExceptionTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        NewsRequestDTO badNews = new NewsRequestDTO("A", "MY CONTENT!", 11);
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
+        NewsRequestDto badNews = new NewsRequestDto("A", "MY CONTENT!", 11);
 
         Exception exception = assertThrows(ValidationException.class, () -> service.create(badNews));
 
@@ -94,8 +94,8 @@ public class NewsServiceTest {
 
     @Test
     void createWithWrongAuthorIdThrowsValidationExceptionTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
-        NewsRequestDTO badNews = new NewsRequestDTO("CLIMBING", "MY CONTENT!", 117);
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
+        NewsRequestDto badNews = new NewsRequestDto("CLIMBING", "MY CONTENT!", 117);
 
         Exception exception = assertThrows(NotFoundException.class, () -> service.create(badNews));
 
@@ -105,12 +105,12 @@ public class NewsServiceTest {
 
     @Test
     void updateReturnsCorrectValueTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         long id = getRandomNewsId(service);
-        NewsRequestDTO newsDto = new NewsRequestDTO(id, "MY TITLE!", "MY CONTENT!", 11);
+        NewsRequestDto newsDto = new NewsRequestDto(id, "MY TITLE!", "MY CONTENT!", 11);
 
         try {
-            NewsResponseDTO response = service.update(newsDto);
+            NewsResponseDto response = service.update(newsDto);
 
             assertEquals(newsDto.getTitle(), response.getTitle());
         } catch (ValidationException | NotFoundException e) {
@@ -121,12 +121,12 @@ public class NewsServiceTest {
 
     @Test
     void updateChangeElementTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         long id = getRandomNewsId(service);
-        NewsRequestDTO newsDto = new NewsRequestDTO(id, "MY TITLE!!!!", "MY CONTENT!!!!", 11);
+        NewsRequestDto newsDto = new NewsRequestDto(id, "MY TITLE!!!!", "MY CONTENT!!!!", 11);
         try {
-            NewsResponseDTO response = service.update(newsDto);
-            NewsResponseDTO updatedNews = service.readById(newsDto.getId());
+            NewsResponseDto response = service.update(newsDto);
+            NewsResponseDto updatedNews = service.readById(newsDto.getId());
 
             assertEquals(response, updatedNews);
         } catch (ValidationException | NotFoundException e) {
@@ -138,10 +138,10 @@ public class NewsServiceTest {
 
     @Test
     void updateWithWrongDataThrowsValidationExceptionTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         long id = getRandomNewsId(service);
 
-        NewsRequestDTO badNews = new NewsRequestDTO(id, "LALALA", "ab", 11);
+        NewsRequestDto badNews = new NewsRequestDto(id, "LALALA", "ab", 11);
 
         Exception exception = assertThrows(ValidationException.class, () -> service.create(badNews));
 
@@ -151,10 +151,10 @@ public class NewsServiceTest {
 
     @Test
     void updateWithIncorrectAuthorIdThrowsValidationException() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         long id = getRandomNewsId(service);
 
-        NewsRequestDTO badNews = new NewsRequestDTO(id, "LALALA", "SASASASASAS", 209);
+        NewsRequestDto badNews = new NewsRequestDto(id, "LALALA", "SASASASASAS", 209);
 
         Exception exception = assertThrows(NotFoundException.class, () -> service.create(badNews));
 
@@ -164,9 +164,9 @@ public class NewsServiceTest {
 
     @Test
     void updateWithIncorrectIdThrowsValidationException() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
 
-        NewsRequestDTO badNews = new NewsRequestDTO(254, "LALALA", "SASASASASAS", 6);
+        NewsRequestDto badNews = new NewsRequestDto(254, "LALALA", "SASASASASAS", 6);
 
         Exception exception = assertThrows(NotFoundException.class, () -> service.update(badNews));
 
@@ -177,18 +177,18 @@ public class NewsServiceTest {
 
     @Test
     void deleteRemovesElementTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         long id = getRandomNewsId(service);
         boolean isRemoved = service.deleteById(id);
-        List<NewsResponseDTO> responseDTOList = service.readAll();
+        List<NewsResponseDto> responseDTOList = service.readAll();
 
         assertTrue(isRemoved);
-        assertFalse(responseDTOList.stream().map(NewsResponseDTO::getId).anyMatch(a -> a == id));
+        assertFalse(responseDTOList.stream().map(NewsResponseDto::getId).anyMatch(a -> a == id));
     }
 
     @Test
     void deleteReturnsFalseWithIncorrectIdTest() {
-        Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
+        Service<NewsRequestDto, NewsResponseDto> service = new NewsService();
         int sizeBeforeDelete = service.readAll().size();
         boolean isRemoved = service.deleteById(123L);
         int sizeAfterDelete = service.readAll().size();

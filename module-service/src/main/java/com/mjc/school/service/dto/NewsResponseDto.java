@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class NewsResponseDTO {
+public class NewsResponseDto {
     private long id;
     private String title;
     private String content;

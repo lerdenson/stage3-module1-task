@@ -5,8 +5,8 @@ import com.mjc.school.repository.models.NewsModel;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.repository.interfaces.Repository;
-import com.mjc.school.service.dto.NewsRequestDTO;
-import com.mjc.school.service.dto.NewsResponseDTO;
+import com.mjc.school.service.dto.NewsRequestDto;
+import com.mjc.school.service.dto.NewsResponseDto;
 import com.mjc.school.service.exceptions.ErrorCodeMessage;
 import com.mjc.school.service.exceptions.NotFoundException;
 import com.mjc.school.service.exceptions.ValidationException;
@@ -16,7 +16,7 @@ import com.mjc.school.service.validator.NewsValidator;
 
 import java.util.List;
 
-public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
+public class NewsService implements Service<NewsRequestDto, NewsResponseDto> {
 
     private final Repository<NewsModel> NewsRepository;
     private final NewsValidator newsValidator = new NewsValidator();
@@ -26,12 +26,12 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
     }
 
     @Override
-    public List<NewsResponseDTO> readAll() {
+    public List<NewsResponseDto> readAll() {
         return NewsMapper.INSTANCE.convert(NewsRepository.readAll());
     }
 
     @Override
-    public NewsResponseDTO readById(Long id) throws NotFoundException {
+    public NewsResponseDto readById(Long id) throws NotFoundException {
         try {
             return NewsMapper
                     .INSTANCE
@@ -44,7 +44,7 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
     }
 
     @Override
-    public NewsResponseDTO create(NewsRequestDTO in) throws ValidationException, NotFoundException {
+    public NewsResponseDto create(NewsRequestDto in) throws ValidationException, NotFoundException {
         try {
             newsValidator.validateNews(in);
             return NewsMapper.INSTANCE.convert(
@@ -56,7 +56,7 @@ public class NewsService implements Service<NewsRequestDTO, NewsResponseDTO> {
     }
 
     @Override
-    public NewsResponseDTO update(NewsRequestDTO in) throws ValidationException, NotFoundException {
+    public NewsResponseDto update(NewsRequestDto in) throws ValidationException, NotFoundException {
         try {
             newsValidator.validateNews(in);
             return NewsMapper.INSTANCE.convert(

@@ -1,11 +1,11 @@
 package com.mjc.school.service.validator;
 
-import com.mjc.school.service.dto.NewsRequestDTO;
+import com.mjc.school.service.dto.NewsRequestDto;
 import com.mjc.school.service.exceptions.ErrorCodeMessage;
 import com.mjc.school.service.exceptions.ValidationException;
 
 public class NewsValidator {
-    public void validateNews(NewsRequestDTO newsDTO) throws ValidationException{
+    public void validateNews(NewsRequestDto newsDTO) throws ValidationException{
         validateTitle(newsDTO.getTitle());
         validateContent(newsDTO.getContent());
         validateAuthorId(newsDTO.getId());
