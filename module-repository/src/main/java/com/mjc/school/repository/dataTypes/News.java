@@ -1,15 +1,13 @@
 package com.mjc.school.repository.dataTypes;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
+@ToString
 public class News {
     private long id;
     private String title;
@@ -28,9 +26,9 @@ public class News {
         this.title = title;
         this.content = content;
         this.authorId = authorId;
-
-        this.id = generateId();
         this.createDate = LocalDateTime.now();
         this.lastUpdateDate = LocalDateTime.now();
+
+        this.id = generateId();
     }
 }

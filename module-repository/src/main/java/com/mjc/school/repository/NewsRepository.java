@@ -3,8 +3,8 @@ package com.mjc.school.repository;
 import com.mjc.school.repository.dataTypes.Author;
 import com.mjc.school.repository.dataTypes.News;
 import com.mjc.school.repository.dataWorker.DataSource;
-import com.mjc.school.repository.exceptions.NotFoundException;
-import com.mjc.school.repository.exceptions.WrongCredentialsException;
+import com.mjc.school.repository.exceptions.NewsNotFoundException;
+import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.interfaces.Repository;
 
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ public class NewsRepository implements Repository<News> {
     }
 
     private boolean isAuthorExists(long authorId) {
-        return dataSource.getAuthors().stream().map(Author::getId).anyMatch(a -> a == authorId);
+        return dataSource.getAuthors().stream().map(Author::getId).anyMatch(a -> a==authorId);
     }
 
 
@@ -28,18 +28,27 @@ public class NewsRepository implements Repository<News> {
     }
 
     @Override
-    public News add(News news) throws WrongCredentialsException {
+    public News findById(long id) throws NewsNotFoundException {
+        Optional<News> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
+        if (newsOptional.isPresent()) {
+            return newsOptional.get();
+        } else throw new NewsNotFoundException();
+    }
+
+    @Override
+    public News add(News news) throws AuthorNotFoundException {
+        News createdNews;
         if (isAuthorExists(news.getAuthorId())) {
-            News createdNews = new News(news.getTitle(), news.getContent(), news.getAuthorId());
-            this.dataSource.getNews().add(news);
+            createdNews = new News(news.getTitle(), news.getContent(), news.getAuthorId());
+            this.dataSource.getNews().add(createdNews);
             return createdNews;
         } else {
-            throw new WrongCredentialsException("Wrong author ID. there is no author with ID=" + news.getId());
+            throw new AuthorNotFoundException();
         }
     }
 
     @Override
-    public News update(News news) throws WrongCredentialsException {
+    public News update(News news) throws AuthorNotFoundException, NewsNotFoundException {
 
         if (isAuthorExists(news.getAuthorId())) {
             Optional<News> optionalNews = this.dataSource.getNews().stream()
@@ -54,13 +63,9 @@ public class NewsRepository implements Repository<News> {
                 updatedNews.setLastUpdateDate(LocalDateTime.now());
                 return updatedNews;
 
-            } else {
-                throw new WrongCredentialsException("Wrong news ID. there is no news with ID=" + news.getId());
-            }
+            } else throw new NewsNotFoundException();
 
-        } else {
-            throw new WrongCredentialsException("Wrong author ID. there is no author with ID=" + news.getId());
-        }
+        } else throw new AuthorNotFoundException();
     }
 
     @Override
@@ -72,11 +77,5 @@ public class NewsRepository implements Repository<News> {
         } else return false;
     }
 
-    @Override
-    public News findById(long id) throws NotFoundException {
-        Optional<News> newsOptional = this.dataSource.getNews().stream().filter(a -> a.getId() == id).findFirst();
-        if (newsOptional.isPresent()) {
-            return newsOptional.get();
-        } else throw new NotFoundException("Wrong news ID. there is no news with ID=" + id);
-    }
+
 }

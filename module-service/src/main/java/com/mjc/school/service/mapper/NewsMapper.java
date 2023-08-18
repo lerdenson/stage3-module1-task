@@ -21,6 +21,7 @@ public interface NewsMapper {
                 .id(newsRequest.getId())
                 .title(newsRequest.getTitle())
                 .content(newsRequest.getContent())
+                .authorId(newsRequest.getAuthorId())
                 .build();
     }
 

@@ -3,26 +3,28 @@ package com.mjc.school.controller;
 import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsRequestDTO;
 import com.mjc.school.service.dto.NewsResponseDTO;
+import com.mjc.school.service.exceptions.NotFoundException;
+import com.mjc.school.service.exceptions.ValidationException;
 import com.mjc.school.service.interfaces.Service;
 
 import java.util.List;
 
-public class NewsController {
+public class NewsController implements Controller<NewsRequestDTO, NewsResponseDTO> {
     private final Service<NewsRequestDTO, NewsResponseDTO> service = new NewsService();
 
     public List<NewsResponseDTO> findAll() {
         return service.findAll();
     }
 
-    public NewsResponseDTO findById(long id) {
+    public NewsResponseDTO findById(long id) throws NotFoundException {
         return service.findById(id);
     }
 
-    public NewsResponseDTO create(NewsRequestDTO newsDTO) {
+    public NewsResponseDTO create(NewsRequestDTO newsDTO) throws ValidationException, NotFoundException {
         return service.create(newsDTO);
     }
 
-    public NewsResponseDTO update(NewsRequestDTO newsDTO) {
+    public NewsResponseDTO update(NewsRequestDTO newsDTO) throws ValidationException, NotFoundException {
         return service.update(newsDTO);
     }
 
