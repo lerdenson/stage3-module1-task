@@ -1,4 +1,6 @@
-package com.mjc.school;
+package com.mjc.school.utils;
+
+import com.mjc.school.service.exceptions.ValidationException;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -19,9 +21,10 @@ public enum Commands {
         this.description = description;
     }
 
-    public static Commands getCommand(int commandNumber) {
+    public static Commands getCommand(int commandNumber) throws ValidationException {
         Optional<Commands> optional = Arrays.stream(Commands.values()).filter(a -> a.commandNumber == commandNumber).findFirst();
-        return optional.orElse(null);
+        if (optional.isPresent()) return optional.get();
+        else throw new ValidationException("Command not found");
     }
 
     public int getCommandNumber() {

@@ -3,6 +3,7 @@ package com.mjc.school.repository.models;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -15,20 +16,4 @@ public class NewsModel {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
     private long authorId;
-
-    private static volatile long currentNextId = 1;
-
-    private synchronized long generateId() {
-        return currentNextId++;
-    }
-
-    public NewsModel(String title, String content, long authorId) {
-        this.title = title;
-        this.content = content;
-        this.authorId = authorId;
-        this.createDate = LocalDateTime.now();
-        this.lastUpdateDate = LocalDateTime.now();
-
-        this.id = generateId();
-    }
 }

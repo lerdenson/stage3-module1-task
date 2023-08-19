@@ -1,5 +1,9 @@
 package com.mjc.school;
 
+import com.mjc.school.service.exceptions.ValidationException;
+import com.mjc.school.utils.CommandExecutor;
+import com.mjc.school.utils.Commands;
+
 import java.util.Scanner;
 
 public class Main {
@@ -12,16 +16,10 @@ public class Main {
             String input = scanner.nextLine();
             try {
                 Commands command = Commands.getCommand(Integer.parseInt(input));
-                if (command == null) {
-                    System.out.println("There is no such operation");
-                } else {
-                    executor.executeCommand(command, scanner);
-                }
-                if (command != null && command.getCommandNumber() == 0) {
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Please write only operation number");
+                executor.executeCommand(command, scanner);
+                if (command.getCommandNumber() == 0) break;
+            } catch (NumberFormatException | ValidationException e) {
+                System.out.println("Command not found");
             }
         }
     }

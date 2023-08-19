@@ -1,4 +1,4 @@
-package com.mjc.school;
+package com.mjc.school.utils;
 
 import com.mjc.school.controller.interfaces.Controller;
 import com.mjc.school.controller.impl.NewsController;
@@ -33,7 +33,7 @@ public class CommandExecutor {
             case UPDATE_NEWS -> update(scanner);
             case REMOVE_NEWS_BY_ID -> delete(scanner);
             case EXIT -> System.exit(0);
-            default -> System.out.println("There is no such command");
+            default -> System.out.println("Command not found.");
 
         }
     }
