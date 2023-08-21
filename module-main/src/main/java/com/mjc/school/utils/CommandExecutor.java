@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CommandExecutor {
-    private final String wrongIdMessage = "id must be number";
+    private final static String wrongIdMessage = "id must be number";
     private final Controller<NewsDtoRequest, NewsDtoResponse> newsController;
 
     public CommandExecutor() {
