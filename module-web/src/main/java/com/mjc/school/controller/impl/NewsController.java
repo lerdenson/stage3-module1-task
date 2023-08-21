@@ -11,30 +11,30 @@ import com.mjc.school.service.interfaces.Service;
 import java.util.List;
 
 public class NewsController implements Controller<NewsDtoRequest, NewsDtoResponse> {
-    private final Service<NewsDtoRequest, NewsDtoResponse> NewsService;
+    private final Service<NewsDtoRequest, NewsDtoResponse> newsService;
 
     public NewsController() {
-        NewsService = new NewsService();
+        newsService = new NewsService();
     }
 
     public List<NewsDtoResponse> readAll() {
-        return NewsService.readAll();
+        return newsService.readAll();
     }
 
     public NewsDtoResponse readById(Long id) throws NotFoundException {
-        return NewsService.readById(id);
+        return newsService.readById(id);
     }
 
-    public NewsDtoResponse create(NewsDtoRequest newsDTO) throws ValidationException, NotFoundException {
-        return NewsService.create(newsDTO);
+    public NewsDtoResponse create(NewsDtoRequest newsDto) throws ValidationException, NotFoundException {
+        return newsService.create(newsDto);
     }
 
-    public NewsDtoResponse update(NewsDtoRequest newsDTO) throws ValidationException, NotFoundException {
-        return NewsService.update(newsDTO);
+    public NewsDtoResponse update(NewsDtoRequest newsDto) throws ValidationException, NotFoundException {
+        return newsService.update(newsDto);
     }
 
     public Boolean delete(Long id) {
-        return NewsService.deleteById(id);
+        return newsService.deleteById(id);
     }
 
 }

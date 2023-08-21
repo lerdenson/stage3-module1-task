@@ -1,12 +1,13 @@
 package com.mjc.school.repository.utils;
 
-import com.mjc.school.repository.utils.factories.AuthorFactory;
-import com.mjc.school.repository.utils.factories.NewsFactory;
 import com.mjc.school.repository.models.AuthorModel;
 import com.mjc.school.repository.models.NewsModel;
+import com.mjc.school.repository.utils.factories.AuthorFactory;
+import com.mjc.school.repository.utils.factories.NewsFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DataSource {
     private static DataSource instance;
@@ -64,10 +65,10 @@ public class DataSource {
     }
 
     private String getRandomString(List<String> list) {
-        return list.get((int) (Math.random() * list.size()));
+        return list.get(new Random().nextInt(list.size()));
     }
 
     private long getRandomAuthorId() {
-        return this.authors.get((int) (Math.random() * authors.size())).getId();
+        return this.authors.get(new Random().nextInt(authors.size())).getId();
     }
 }

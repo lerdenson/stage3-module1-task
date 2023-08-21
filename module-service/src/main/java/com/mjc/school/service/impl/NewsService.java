@@ -1,10 +1,10 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.impl.NewsRepository;
-import com.mjc.school.repository.models.NewsModel;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
+import com.mjc.school.repository.impl.NewsRepository;
 import com.mjc.school.repository.interfaces.Repository;
+import com.mjc.school.repository.models.NewsModel;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.exceptions.ErrorCodeMessage;
@@ -18,16 +18,16 @@ import java.util.List;
 
 public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
 
-    private final Repository<NewsModel> NewsRepository;
+    private final Repository<NewsModel> newsRepository;
     private final NewsValidator newsValidator = new NewsValidator();
 
     public NewsService() {
-        NewsRepository = new NewsRepository();
+        newsRepository = new NewsRepository();
     }
 
     @Override
     public List<NewsDtoResponse> readAll() {
-        return NewsMapper.INSTANCE.convert(NewsRepository.readAll());
+        return NewsMapper.INSTANCE.convert(newsRepository.readAll());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
         try {
             return NewsMapper
                     .INSTANCE
-                    .convert(NewsRepository.readById(id));
+                    .convert(newsRepository.readById(id));
         } catch (NewsNotFoundException e) {
             throw new NotFoundException(String.format(ErrorCodeMessage.NEWS_NOT_FOUND.toString(), id));
         }
@@ -48,7 +48,7 @@ public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
         try {
             newsValidator.validateNews(in);
             return NewsMapper.INSTANCE.convert(
-                    NewsRepository.create(NewsMapper.INSTANCE.convertRequest(in))
+                    newsRepository.create(NewsMapper.INSTANCE.convertRequest(in))
             );
         } catch (AuthorNotFoundException e) {
             throw new NotFoundException(String.format(ErrorCodeMessage.AUTHOR_NOT_FOUND.toString(), in.getAuthorId()));
@@ -60,7 +60,7 @@ public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
         try {
             newsValidator.validateNews(in);
             return NewsMapper.INSTANCE.convert(
-                    NewsRepository.update(NewsMapper.INSTANCE.convertRequest(in))
+                    newsRepository.update(NewsMapper.INSTANCE.convertRequest(in))
             );
         } catch (AuthorNotFoundException e) {
             throw new NotFoundException(String.format(ErrorCodeMessage.AUTHOR_NOT_FOUND.toString(), in.getAuthorId()));
@@ -72,6 +72,6 @@ public class NewsService implements Service<NewsDtoRequest, NewsDtoResponse> {
 
     @Override
     public Boolean deleteById(Long id) {
-        return NewsRepository.deleteById(id);
+        return newsRepository.deleteById(id);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NewsServiceTest {
+class NewsServiceTest {
 
     long getRandomNewsId(Service<NewsDtoRequest, NewsDtoResponse> service) {
         List<NewsDtoResponse> newsList = service.readAll();

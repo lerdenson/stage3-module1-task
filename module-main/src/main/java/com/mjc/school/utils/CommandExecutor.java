@@ -1,7 +1,7 @@
 package com.mjc.school.utils;
 
-import com.mjc.school.controller.interfaces.Controller;
 import com.mjc.school.controller.impl.NewsController;
+import com.mjc.school.controller.interfaces.Controller;
 import com.mjc.school.service.dto.NewsDtoRequest;
 import com.mjc.school.service.dto.NewsDtoResponse;
 import com.mjc.school.service.exceptions.NotFoundException;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CommandExecutor {
-    private final String WRONG_ID = "id must be number";
+    private final String wrongIdMessage = "id must be number";
     private final Controller<NewsDtoRequest, NewsDtoResponse> newsController;
 
     public CommandExecutor() {
@@ -51,7 +51,7 @@ public class CommandExecutor {
             NewsDtoResponse news = newsController.readById(id);
             System.out.println(news);
         } catch (NumberFormatException e) {
-            System.out.println(WRONG_ID);
+            System.out.println(wrongIdMessage);
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -66,7 +66,7 @@ public class CommandExecutor {
             NewsDtoResponse returnedNews = newsController.create(newNews);
             System.out.println(returnedNews);
         } catch (NumberFormatException e) {
-            System.out.println(WRONG_ID);
+            System.out.println(wrongIdMessage);
         } catch (NotFoundException | ValidationException e) {
             System.out.println(e.getMessage());
         }
@@ -83,7 +83,7 @@ public class CommandExecutor {
             System.out.println(returnedNews);
 
         } catch (NumberFormatException e) {
-            System.out.println(WRONG_ID);
+            System.out.println(wrongIdMessage);
         } catch (NotFoundException | ValidationException e) {
             System.out.println(e.getMessage());
         }
@@ -95,7 +95,7 @@ public class CommandExecutor {
             boolean isDeleted = newsController.delete(id);
             System.out.println(isDeleted);
         } catch (NumberFormatException e) {
-            System.out.println(WRONG_ID);
+            System.out.println(wrongIdMessage);
         }
     }
 
